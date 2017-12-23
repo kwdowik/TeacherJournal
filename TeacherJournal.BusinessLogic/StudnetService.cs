@@ -15,7 +15,7 @@ namespace TeacherJournal.BusinessLogic
 
         public async Task<Student> GetByIdAsync(int id) => await _studentRepository.GetById(id);
 
-        public async Task<IReadOnlyCollection<Student>> GetAll() => await _studentRepository.GetAll();
+        public async Task<IReadOnlyCollection<Student>> GetAll() => await _studentRepository.GetAllAsync();
 
         public async Task Add(string firstName, string lastName, Dictionary<string, List<int>> subjects)
         {
@@ -26,7 +26,7 @@ namespace TeacherJournal.BusinessLogic
 
         public async Task Remove(int id) => await _studentRepository.Remove(id);
 
-        public async Task Update(int id, Student student) => await _studentRepository.Update(id, student);
+        public async Task Update(Student student) => await _studentRepository.Update(student);
 
         
     }
