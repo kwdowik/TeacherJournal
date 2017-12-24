@@ -17,7 +17,7 @@ namespace TeacherJournal.BusinessLogic
 
         public async Task<IReadOnlyCollection<Teacher>> GetAll() => await _teacherRepository.GetAllAsync();
 
-        public async Task Add(string login, string password, List<string> subjects)
+        public async Task Create(string login, string password, List<string> subjects)
         {
             var random = new Random();
             var teacher = new Teacher(random.Next(1, int.MaxValue), login, password, subjects);
