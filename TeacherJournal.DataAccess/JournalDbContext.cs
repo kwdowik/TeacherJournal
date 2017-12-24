@@ -11,7 +11,7 @@ namespace TeacherJournal.DataAccess
         {
         }
 
-       protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var teacherMapping = modelBuilder.Entity<Teacher>();
             
@@ -23,6 +23,11 @@ namespace TeacherJournal.DataAccess
             studentMapping.HasKey(p => p.Id);
             studentMapping.Property(p => p.FirstName).IsRequired();
             studentMapping.Property(p => p.LastName).IsRequired();
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlite("Data Source=jorunal.db");
         }
 
         public DbSet<Teacher> Teachers {get; set;}
