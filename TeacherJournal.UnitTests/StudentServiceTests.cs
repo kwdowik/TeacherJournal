@@ -15,8 +15,8 @@ namespace TeacherJournal.Tests
             // Arrange
             var repoMock = new Mock<IRepository<Student>>();
             var studentService = new StudentService(repoMock.Object);
-            var subjects = new Dictionary<string, List<int>>();
-            subjects.Add(key: "Math", value: new List<int>{ 3, 4, 3, 5});
+            var subjects = new List<Subject>();
+            subjects.Add(new Subject(123, "Math", new List<Mark>{ new Mark(123, 3), new Mark(1234, 5)}));
             
             // Act
             await studentService.Create("Jan", "Kowalski", subjects);
@@ -50,17 +50,16 @@ namespace TeacherJournal.Tests
              // Arrange
             var repoMock = new Mock<IRepository<Student>>();
             var studentService = new StudentService(repoMock.Object);
-            var subjects = new Dictionary<string, List<int>>();
-            subjects.Add(key: "Math", value: new List<int>{ 3, 4, 3, 5});
+            var subjects = new List<Subject>();
+            subjects.Add(new Subject(123, "Math", new List<Mark>{ new Mark(123, 3), new Mark(1234, 5)}));
             var student = new Student(123123, "Jan", "Kowlaski", subjects);
             await repoMock.Object.Add(student);
             
             // Act
-            var wasAdded = studentService.AddMark(student, "Math", 4);
+            studentService.AddMark(student, "Math", 4);
 
             // Assert
-            Assert.True(wasAdded);
-            Assert.Equal(5, student.Subjects.GetValueOrDefault("Math").Count);
+            Assert.Equal(3, student.Subjects.Find(s => s.Name == "Math").Marks.Count);
         }
 
         [Fact]
@@ -69,17 +68,16 @@ namespace TeacherJournal.Tests
              // Arrange
             var repoMock = new Mock<IRepository<Student>>();
             var studentService = new StudentService(repoMock.Object);
-            var subjects = new Dictionary<string, List<int>>();
-            subjects.Add(key: "Math", value: new List<int>{ 3, 4, 3, 5});
+             var subjects = new List<Subject>();
+            subjects.Add(new Subject(123, "Math", new List<Mark>{ new Mark(123, 3), new Mark(1234, 5)}));
             var student = new Student(123123, "Jan", "Kowlaski", subjects);
             await repoMock.Object.Add(student);
             
             // Act
-            var wasRemoved = studentService.RemoveMark(student, "Math", 1);
+            studentService.RemoveMark(student, "Math", 1);
 
             // Assert
-            Assert.True(wasRemoved);
-            Assert.Equal(3, student.Subjects.GetValueOrDefault("Math").Count);
+            Assert.Equal(1, student.Subjects.Find(s => s.Name == "Math").Marks.Count);
         }
         
     }
