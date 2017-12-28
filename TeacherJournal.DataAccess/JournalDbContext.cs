@@ -23,15 +23,26 @@ namespace TeacherJournal.DataAccess
             studentMapping.HasKey(p => p.Id);
             studentMapping.Property(p => p.FirstName).IsRequired();
             studentMapping.Property(p => p.LastName).IsRequired();
+
+            var subjectMapping = modelBuilder.Entity<Subject>();
+            subjectMapping.HasKey(s => s.Id);
+            subjectMapping.Property(s => s.Name).IsRequired();
+            
+            var markMapping = modelBuilder.Entity<Mark>();
+            markMapping.HasKey(s => s.Id);
+            markMapping.Property(m => m.Value).IsRequired();
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlite("Data Source=jorunal.db");
-        }
+        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        // {
+        //     optionsBuilder.UseSqlite("Data Source=jorunal.db");
+        // }
 
         public DbSet<Teacher> Teachers {get; set;}
         public DbSet<Student> Students {get; set;}
+        public DbSet<Subject> Subjects {get; set;}
+        public DbSet<Mark> Marks {get; set;}
+        
         
     }
 }
