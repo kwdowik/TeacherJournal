@@ -11,6 +11,7 @@ namespace TeacherJournal.BusinessLogic
             Name = name;
             Marks = marks != null ? marks : new List<Mark>();
         }
+        private Subject() {}
         public int Id { get; private set; }
         public string Name { get; private set; }
         public List<Mark> Marks { get; private set; }

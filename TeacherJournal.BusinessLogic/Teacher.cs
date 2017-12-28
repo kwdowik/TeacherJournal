@@ -11,6 +11,7 @@ namespace TeacherJournal.BusinessLogic
             Password = password;
             Subject = subject;
         }
+        private Teacher() {}
         public int Id {get; private set;}
         public string Login {get; private set;}
         public string Password {get; private set;}

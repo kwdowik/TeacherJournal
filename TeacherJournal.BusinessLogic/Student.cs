@@ -12,6 +12,8 @@ namespace TeacherJournal.BusinessLogic
             LastName = lastName;
             Subjects = subjects != null ? subjects : new List<Subject>();
         }
+
+        private Student() {}
         public int Id {get; private set;}
         public string FirstName {get; private set;}
         public string LastName {get; private set;}

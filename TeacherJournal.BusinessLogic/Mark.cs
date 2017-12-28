@@ -12,6 +12,8 @@ namespace TeacherJournal.BusinessLogic
             Value = value;
 
         }
+
+        private Mark() {}
         public int Id { get; private set; }
         public int Value { get; private set; }
 
