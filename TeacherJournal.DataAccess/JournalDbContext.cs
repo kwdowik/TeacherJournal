@@ -1,15 +1,27 @@
 using TeacherJournal.BusinessLogic;
 using Microsoft.EntityFrameworkCore;
 using System;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace TeacherJournal.DataAccess
 {
+
+    public class JournalDbContextFactory : IDesignTimeDbContextFactory<JournalDbContext>
+    {
+        public JournalDbContext CreateDbContext(string[] args)
+        {
+             var optionsBuilder = new DbContextOptionsBuilder<JournalDbContext>();
+            optionsBuilder.UseSqlite("Data Source=journal.db");
+
+            return new JournalDbContext(optionsBuilder.Options);
+        }
+    }
     public class JournalDbContext : DbContext
     {
         public JournalDbContext(DbContextOptions<JournalDbContext> options)
             : base(options)
-        {
-        }
+        { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -32,11 +44,6 @@ namespace TeacherJournal.DataAccess
             markMapping.HasKey(s => s.Id);
             markMapping.Property(m => m.Value).IsRequired();
         }
-
-        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        // {
-        //     optionsBuilder.UseSqlite("Data Source=jorunal.db");
-        // }
 
         public DbSet<Teacher> Teachers {get; set;}
         public DbSet<Student> Students {get; set;}
