@@ -6,3 +6,4 @@ TeacherJournal.DataAccess/obj/
 TeacherJournal.DataAccess/bin/
 TeacherJournal.UnitTests/obj/
 TeacherJournal.UnitTests/bin/
+TeacherJournal.Core/journal.db
