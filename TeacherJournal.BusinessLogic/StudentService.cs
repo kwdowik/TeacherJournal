@@ -18,7 +18,7 @@ namespace TeacherJournal.BusinessLogic
 
         public async Task<IReadOnlyCollection<Student>> GetAll() => await _studentRepository.GetAllAsync();
 
-        public async Task Create(string firstName, string lastName, Dictionary<string, List<int>> subjects)
+        public async Task Create(string firstName, string lastName, List<Subject> subjects)
         {
             var random = new Random();
             var student = new Student(random.Next(1, int.MaxValue), firstName, lastName, subjects);
@@ -31,24 +31,24 @@ namespace TeacherJournal.BusinessLogic
 
         public double CalculateMarksAvarage(List<int> marks) => ((double)marks.Sum() / (double)marks.Count);
 
-        public bool AddMark(Student student, string subject, int mark)
+        public void AddMark(Student student, string subject, int mark)
         {
-            List<int> marks;
-            if(!student.Subjects.TryGetValue(subject, out marks))
-                return false;
-            marks.Add(mark);
-            student.Subjects[subject] = marks;
-            return true;
+            var random = new Random();            
+            var currSubject =
+                student.Subjects.FirstOrDefault(s => s.Name == subject);
+            currSubject.Marks.Add(new Mark(random.Next(1, int.MaxValue), mark));
+            student.Subjects.Remove(currSubject);
+            student.Subjects.Add(currSubject);            
         }
 
-        public bool RemoveMark(Student student, string subject, int markIndex)
+        public void RemoveMark(Student student, string subject, int markId)
         {
-            List<int> marks;
-            if(!student.Subjects.TryGetValue(subject, out marks))
-                return false;
-            marks.RemoveAt(markIndex);
-            student.Subjects[subject] = marks;
-            return true;
+           var currSubject =
+                student.Subjects.FirstOrDefault(s => s.Name == subject);
+            var markToRemove = currSubject.Marks.FirstOrDefault(m => m.Id == markId);
+            currSubject.Marks.Remove(markToRemove);
+            student.Subjects.Remove(currSubject);
+            student.Subjects.Add(currSubject);   
         }
     }
 }
