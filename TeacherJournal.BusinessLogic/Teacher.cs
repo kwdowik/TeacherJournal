@@ -6,15 +6,15 @@ namespace TeacherJournal.BusinessLogic
     {
         public Teacher(int id, string login, string password, string subject)
         {
-            Id = id;
+            TeacherId = id;
             Login = login;
             Password = password;
             Subject = subject;
         }
         private Teacher() {}
-        public int Id {get; private set;}
-        public string Login {get; private set;}
-        public string Password {get; private set;}
-        public string Subject {get; private set;}
+        public int TeacherId {get; set;}
+        public string Login {get; set;}
+        public string Password {get; set;}
+        public string Subject {get; set;}
     }
 }
