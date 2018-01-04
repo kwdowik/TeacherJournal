@@ -23,9 +23,16 @@ namespace TeacherJournal.DataAccess
             return await _journalDbContext.Students.ToListAsync();
         }
 
-        public async Task<Student> GetById(int id)
+        public async Task<Student> GetById(int? id)
         {
-            return await _journalDbContext.Students.FindAsync(id);
+            if(id == null)
+                return null;
+                
+            return await _journalDbContext.Students
+                .Include(s => s.Marks)
+                .ThenInclude(m => m.Subject)
+                .AsNoTracking()
+                .SingleOrDefaultAsync(m => m.ID == id);
         }
 
         public async Task Remove(int id)
