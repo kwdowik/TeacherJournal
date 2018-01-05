@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace TeacherJournal.BusinessLogic
 {
@@ -13,7 +14,13 @@ namespace TeacherJournal.BusinessLogic
              _subjectService = subjectService;
         } 
 
-        public async Task<Subject> GetByIdAsync(int id) => await _subjectService.GetById(id);
+        public async Task<Subject> GetByIdAsync(int? id) => await _subjectService.GetById(id);
+
+        public async Task<Subject> GetByNameAsync(string subjectName)
+        {
+            var subjects = await GetAll();
+            return subjects.Where(s => s.Name == subjectName).FirstOrDefault();
+        }
 
         public async Task<IReadOnlyCollection<Subject>> GetAll() => await _subjectService.GetAllAsync();
 
