@@ -31,24 +31,5 @@ namespace TeacherJournal.BusinessLogic
 
         public double CalculateMarksAvarage(List<int> marks) => ((double)marks.Sum() / (double)marks.Count);
 
-        // public void AddMark(Student student, string subject, int mark)
-        // {
-        //     var random = new Random();            
-        //     var currSubject =
-        //         student.Subjects.FirstOrDefault(s => s.Name == subject);
-        //     currSubject.Marks.Add(new Mark{random.Next(1, int.MaxValue), mark});
-        //     student.Subjects.Remove(currSubject);
-        //     student.Subjects.Add(currSubject);            
-        // }
-
-        // public void RemoveMark(Student student, string subject, int markId)
-        // {
-        //    var currSubject =
-        //         student.Subjects.FirstOrDefault(s => s.Name == subject);
-        //     var markToRemove = currSubject.Marks.FirstOrDefault(m => m.MarkId == markId);
-        //     currSubject.Marks.Remove(markToRemove);
-        //     student.Subjects.Remove(currSubject);
-        //     student.Subjects.Add(currSubject);   
-        // }
     }
 }
