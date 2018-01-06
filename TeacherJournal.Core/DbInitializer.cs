@@ -7,10 +7,10 @@ namespace TeacherJournal.Core
 {
     public static class DbInitializer
     {
-         public static void Initialize(JournalDbContext context)//SchoolContext is EF context
+         public static void Initialize(JournalDbContext context)
         {
            
-            context.Database.EnsureCreated();//if db is not exist ,it will create database .but ,do nothing .
+            context.Database.EnsureCreated();
 
             // Look for any students.
             if (context.Students.Any())
@@ -18,24 +18,57 @@ namespace TeacherJournal.Core
                 return;   // DB has been seeded
             }
 
-            var subjects = new List<Subject>();
-            subjects.Add(new Subject(1, "Math", new List<Mark>{ new Mark(4, 3), new Mark(1, 4)}));
-            var student1 = new Student(1, "Jan", "Kowlaski", subjects);
-            subjects = new List<Subject>();
-            subjects.Add(new Subject(2, "English", new List<Mark>{ new Mark(5, 3), new Mark(2, 3)}));
-            var student2 = new Student(2, "Jakub", "Wede", subjects);
-            subjects = new List<Subject>();
-            subjects.Add(new Subject(3, "PE", new List<Mark>{ new Mark(6, 3), new Mark(3, 3)}));
-            var student3 = new Student(3, "Olaf", "Wat", subjects);
-            var students = new Student[]
+           var students = new Student[]
             {
-                student1, 
-                student2, 
-                student3
+                new Student{FirstName="Carson",LastName="Alexander"},
+                new Student{FirstName="Meredith",LastName="Alonso"},
+                new Student{FirstName="Arturo",LastName="Anand"},
+                new Student{FirstName="Gytis",LastName="Barzdukas"},
+                new Student{FirstName="Yan",LastName="Li"},
+                new Student{FirstName="Peggy",LastName="Justice"},
+                new Student{FirstName="Laura",LastName="Norman"},
+                new Student{FirstName="Nino",LastName="Olivetto"}
             };
             foreach (Student s in students)
             {
                 context.Students.Add(s);
+            }
+            context.SaveChanges();
+
+            var subjects = new Subject[]
+            {
+                new Subject{SubjectID=1050,Name="Chemistry"},
+                new Subject{SubjectID=4022,Name="Microeconomics"},
+                new Subject{SubjectID=4041,Name="Macroeconomics"},
+                new Subject{SubjectID=1045,Name="Calculus"},
+                new Subject{SubjectID=3141,Name="Trigonometry"},
+                new Subject{SubjectID=2021,Name="Composition"},
+                new Subject{SubjectID=2042,Name="Literature"}
+            };
+            foreach (Subject s in subjects)
+            {
+                context.Subjects.Add(s);
+            }
+            context.SaveChanges();
+
+            var marks = new Mark[]
+            {
+                new Mark{StudentID=1,SubjectID=1050,Grade=3},
+                new Mark{StudentID=1,SubjectID=4022,Grade=4},
+                new Mark{StudentID=1,SubjectID=4041,Grade=3},
+                new Mark{StudentID=2,SubjectID=1045,Grade=4},
+                new Mark{StudentID=2,SubjectID=3141,Grade=4},
+                new Mark{StudentID=2,SubjectID=2021,Grade=3},
+                new Mark{StudentID=3,SubjectID=1050,Grade=2},
+                new Mark{StudentID=4,SubjectID=1050,Grade=5},
+                new Mark{StudentID=4,SubjectID=4022,Grade=5},
+                new Mark{StudentID=5,SubjectID=4041,Grade=5},
+                new Mark{StudentID=6,SubjectID=1045,Grade=6},
+                new Mark{StudentID=7,SubjectID=3141,Grade=4},
+            };
+            foreach (Mark m in marks)
+            {
+                context.Marks.Add(m);
             }
             context.SaveChanges();
         }
