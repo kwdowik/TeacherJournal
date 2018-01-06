@@ -18,12 +18,15 @@ namespace TeacherJournal.BusinessLogic
 
         public async Task<IReadOnlyCollection<Mark>> GetAll() => await _markRepository.GetAllAsync();
 
-        public async Task Create(int? studentID, int? subjectID, int? grade)
+        public async Task Create(int? studentID, int? subjectID, int? grade = null)
         {
-            if(studentID == null || subjectID == null || grade == null)
+            if(studentID == null || subjectID == null)
                 return;
             var random = new Random();
-            var mark = new Mark{ MarkID = random.Next(1, int.MaxValue), StudentID = studentID.Value, SubjectID = subjectID.Value, Grade = grade.Value };
+            
+            var mark = grade == null 
+                ? new Mark{ MarkID = random.Next(1, int.MaxValue), StudentID = studentID.Value, SubjectID = subjectID.Value } 
+                : new Mark{ MarkID = random.Next(1, int.MaxValue), StudentID = studentID.Value, SubjectID = subjectID.Value, Grade = grade.Value };
             await _markRepository.Add(mark);
         }
         
