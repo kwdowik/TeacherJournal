@@ -1,0 +1,13 @@
+@model TeacherJournal.BusinessLogic.Student;
+
+<h2>Add Student</h2>
+
+<dd>
+    <form asp-controller="Student" asp-action="AddStudent" method="Post">
+        <input  asp-for="FirstName" type="text" placeholder="First Name"/>
+        <input asp-for="LastName" type="text" placeholder="Last Name" />
+        </br>
+        </br>        
+        <input type="submit" value="Create"/>
+    </form>
+</dd>

@@ -51,6 +51,22 @@ namespace TeacherJournal.Core.Controllers
             };
             return View(studentViewModel);
         }
+
+        //GET: AddStudent
+        public IActionResult AddStudent()
+        {
+            var student = new Student();
+            return View(student);
+        }
+
+        //POST: AddStudent
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddStudent(Student student)
+        {
+            await _studentService.Create(student.FirstName, student.LastName);
+            return RedirectToAction("Index");
+        }
         
         
 
