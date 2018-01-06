@@ -1,0 +1,39 @@
+@model StudentViewModel;
+
+<h2>Marks</h2>
+<dd>
+    <table class="table">
+        <tr>
+            <th>Subject name</th>
+            <th>Marks</th>            
+        </tr>
+        <br/>
+        @foreach (var item in Model.Marks)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Key)
+                </td>
+                <td>
+                    @foreach (var mark in item.Value)
+                    {
+                        @Html.DisplayFor(modelItem => mark)
+                        @if(item.Value.LastOrDefault() != mark)
+                        {
+                            @Html.Raw(", ")
+                        }
+                    }
+                </td>
+                <td>
+                <form asp-controller="Subject" asp-action="AddMark">
+                    Grade: <input name="newMark" type="number" max="6" min="1" />
+                    <input hidden="hidden" asp-for="@item.Key" name="subjectName" type="text"/>  
+                    <input hidden="hidden" asp-for="@Model.ID" name="studentID" type="number"/>                                                          
+                    <input type="submit" value="Add"/>
+                </form>
+                </td>
+            </tr>
+        }
+    </table>
+    <a asp-controller="Subject" asp-route-studentID="@Model.ID" asp-action="AddSubject">Add Subject</a> 
+</dd>
