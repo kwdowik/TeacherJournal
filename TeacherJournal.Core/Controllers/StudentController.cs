@@ -67,6 +67,15 @@ namespace TeacherJournal.Core.Controllers
             await _studentService.Create(student.FirstName, student.LastName);
             return RedirectToAction("Index");
         }
+
+        //GET: DeleteStudent
+        public async Task<IActionResult> DeleteStudent(int? id)
+        {
+            if(id == null)
+                return NotFound();
+            await _studentService.Remove(id.Value);
+            return RedirectToAction("Index");
+        }
         
         
 

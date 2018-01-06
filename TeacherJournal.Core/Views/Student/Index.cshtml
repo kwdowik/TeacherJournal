@@ -11,6 +11,8 @@
         <tr>
             <th>@Html.DisplayNameFor(model => model.FirstName)</th>
             <th>@Html.DisplayNameFor(model => model.LastName)</th>
+            <th></th>
+            <th>Delete</th>
         </tr>
     </thead>
     <tbody>
@@ -21,6 +23,14 @@
                 <td>@Html.DisplayFor(modelItem => item.LastName)</td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.ID">Details</a> 
+                </td>
+                <td>
+                    <a asp-action="DeleteStudent" 
+                            asp-route-id="@item.ID">
+                        <button>
+                            x
+                        </button>
+                    </a>
                 </td>
             </tr>}
     </tbody>
