@@ -1,0 +1,12 @@
+@model SubjectViewModel;
+
+<h2>Add Subject</h2>
+
+<dd>
+    <form asp-controller="Subject" asp-action="AddSubject" method="Post">
+        <input  asp-for="Name" type="text" placeholder="Name"/>
+        Grade: <input asp-for="Mark" type="number" max="6" min="1" />
+        <input asp-for="StudentID" type="text" hidden="hidden" />  
+        <input type="submit" value="Create"/>
+    </form>
+</dd>
