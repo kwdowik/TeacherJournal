@@ -24,11 +24,14 @@ namespace TeacherJournal.BusinessLogic
 
         public async Task<IReadOnlyCollection<Subject>> GetAll() => await _subjectService.GetAllAsync();
 
-        public async Task Create(string name, List<Mark> marks)
+        public async Task<int> Create(string name)
         {
+            if(await GetByNameAsync(name) != null)
+                return 0;
             var random = new Random();
             var subject = new Subject{SubjectID = random.Next(1, int.MaxValue), Name = name};
             await _subjectService.Add(subject);
+            return subject.SubjectID;
         }
 
         public async Task Remove(int id) => await _subjectService.Remove(id);
