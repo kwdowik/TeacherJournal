@@ -32,6 +32,14 @@ namespace TeacherJournal.BusinessLogic
         
         public async Task Remove(int id) => await _markRepository.Remove(id);
 
+        public async Task RemoveGroup(List<Mark> marks)
+        {
+            foreach(var mark in marks)
+            {
+                await Remove(mark.MarkID);
+            }
+        }
+
         public async Task Update(Mark mark) => await _markRepository.Update(mark);
 
         public async Task<IReadOnlyCollection<Mark>> GetAllMarksByStudentId(int? id)

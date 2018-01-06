@@ -5,7 +5,9 @@
     <table class="table">
         <tr>
             <th>Subject name</th>
-            <th>Marks</th>            
+            <th>Marks</th>   
+            <th>Add</th>            
+            <th>Delete</th>            
         </tr>
         <br/>
         @foreach (var item in Model.Marks)
@@ -32,8 +34,17 @@
                     <input type="submit" value="Add"/>
                 </form>
                 </td>
+                <td>
+                    <a asp-controller="Subject" asp-action="DeleteSubject" 
+                        asp-route-studentID="@Model.ID"
+                        asp-route-subjectName="@item.Key">
+                    <button>
+                        x
+                    </button>
+                    </a>
+                </td>
             </tr>
         }
     </table>
-    <a asp-controller="Subject" asp-route-studentID="@Model.ID" asp-action="AddSubject">Add Subject</a> 
+    <a asp-controller="Subject" asp-action="AddSubject" asp-route-studentID="@Model.ID">Add Subject</a> 
 </dd>

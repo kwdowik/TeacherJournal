@@ -10,6 +10,7 @@ using TeacherJournal.Core.Models;
 
 namespace TeacherJournal.Core.Controllers
 {
+    [Authorize]
     public class SubjectController : Controller
     {
         private readonly MarkService _markService;
@@ -46,19 +47,34 @@ namespace TeacherJournal.Core.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddSubject(SubjectViewModel subjectViewModel)
         {
+            int subjectID = await GetSubjectId(subjectViewModel.Name);
+            await _markService.Create(subjectViewModel.StudentID, subjectID, subjectViewModel.Mark);
+            return RedirectToAction("Details", "Student", new {id = subjectViewModel.StudentID});
+        }
+
+        //POST: DeleteSubject
+        public async Task<IActionResult> DeleteSubject(int? studentID, string subjectName)
+        {
+            var student = await _studentService.GetByIdAsync(studentID);
+            int subjectID = await GetSubjectId(subjectName);
+            var marks = student.Marks.Where(m => m.SubjectID == subjectID).ToList();
+            await _markService.RemoveGroup(marks);
+            return RedirectToAction("Details", "Student", new {id = studentID});
+        }
+        
+        private async Task<int> GetSubjectId(string subjectName)
+        {
             int subjectID;
-            var subject = await _subjectService.GetByNameAsync(subjectViewModel.Name);
+            var subject = await _subjectService.GetByNameAsync(subjectName);
             if(subject == null)   
             {
-                subjectID = await _subjectService.Create(subjectViewModel.Name);
+                subjectID = await _subjectService.Create(subjectName);
             }else 
             {
                 subjectID = subject.SubjectID;
-            }       
-            await _markService.Create(subjectViewModel.StudentID, subjectID, subjectViewModel.Mark);
-            return RedirectToAction("Index", "Student");
+            }   
+            return subjectID;   
         }
-
 
         
     }
