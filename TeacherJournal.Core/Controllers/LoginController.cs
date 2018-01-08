@@ -7,11 +7,18 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using TeacherJournal.BusinessLogic;
 
 namespace TeacherJournal.Core.Controllers
 {
     public class LoginController : Controller
     {
+        private readonly TeacherService _teacherService;
+
+        public LoginController(TeacherService teacherSerivce)
+        {
+            _teacherService = teacherSerivce;
+        }
         // GET: Index
         public IActionResult Index()
         {
@@ -20,14 +27,14 @@ namespace TeacherJournal.Core.Controllers
 
         // POST: Index
         [HttpPost]
-        public async Task<IActionResult> Index(string username, string password)
+        public async Task<IActionResult> Index(string login, string password)
         {
             // TODO: log in
-            if(username == "admin" && password == "admin")
+            if(await _teacherService.GetByLoginAsync(login) != null)
             {
                 var claims = new List<Claim>()
                 {
-                    new Claim(ClaimTypes.Name, username)
+                    new Claim(ClaimTypes.Name, login)
                 };
 
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
