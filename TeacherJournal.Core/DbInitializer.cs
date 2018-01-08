@@ -13,10 +13,18 @@ namespace TeacherJournal.Core
             context.Database.EnsureCreated();
 
             // Look for any students.
-            if (context.Students.Any())
+            if (context.Students.Any() && context.Teachers.Any())
             {
                 return;   // DB has been seeded
             }
+
+            var teachers = new Teacher[]
+            {
+                new Teacher{Login="Luke", Password="password123"},
+                new Teacher{Login="Andrew", Password="password123"}
+            };
+            context.Teachers.AddRange(teachers);
+            context.SaveChanges();            
 
            var students = new Student[]
             {
@@ -29,10 +37,7 @@ namespace TeacherJournal.Core
                 new Student{FirstName="Laura",LastName="Norman"},
                 new Student{FirstName="Nino",LastName="Olivetto"}
             };
-            foreach (Student s in students)
-            {
-                context.Students.Add(s);
-            }
+            context.Students.AddRange(students);
             context.SaveChanges();
 
             var subjects = new Subject[]
@@ -45,10 +50,7 @@ namespace TeacherJournal.Core
                 new Subject{SubjectID=2021,Name="Composition"},
                 new Subject{SubjectID=2042,Name="Literature"}
             };
-            foreach (Subject s in subjects)
-            {
-                context.Subjects.Add(s);
-            }
+            context.Subjects.AddRange(subjects);
             context.SaveChanges();
 
             var marks = new Mark[]
@@ -66,10 +68,7 @@ namespace TeacherJournal.Core
                 new Mark{StudentID=6,SubjectID=1045,Grade=6},
                 new Mark{StudentID=7,SubjectID=3141,Grade=4},
             };
-            foreach (Mark m in marks)
-            {
-                context.Marks.Add(m);
-            }
+            context.Marks.AddRange(marks);
             context.SaveChanges();
         }
     }
