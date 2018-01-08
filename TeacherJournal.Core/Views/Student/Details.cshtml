@@ -1,11 +1,13 @@
 @model StudentViewModel;
+@using System;
 
 <h2>Marks</h2>
 <dd>
     <table class="table">
         <tr>
             <th>Subject name</th>
-            <th>Marks</th>   
+            <th>Marks</th> 
+            <th>Avarage</th>  
             <th>Add</th>            
             <th>Delete</th>            
         </tr>
@@ -25,6 +27,13 @@
                             @Html.Raw(", ")
                         }
                     }
+                </td>
+                <td>
+                    @{
+                        var avarage = ((double)item.Value.Sum() / (double)item.Value.Count).ToString("F2");
+                       
+                    }
+                    @Html.DisplayFor(modelItem => avarage) 
                 </td>
                 <td>
                 <form asp-controller="Subject" asp-action="AddMark">
