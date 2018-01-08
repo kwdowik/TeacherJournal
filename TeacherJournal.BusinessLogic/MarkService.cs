@@ -14,8 +14,6 @@ namespace TeacherJournal.BusinessLogic
             _markRepository = markRepository;
         }
 
-         public async Task<Mark> GetByIdAsync(int? id) => await _markRepository.GetById(id);
-
         public async Task<IReadOnlyCollection<Mark>> GetAll() => await _markRepository.GetAllAsync();
 
         public async Task Create(int? studentID, int? subjectID, int? grade = null)
@@ -38,16 +36,6 @@ namespace TeacherJournal.BusinessLogic
             {
                 await Remove(mark.MarkID);
             }
-        }
-
-        public async Task Update(Mark mark) => await _markRepository.Update(mark);
-
-        public async Task<IReadOnlyCollection<Mark>> GetAllMarksByStudentId(int? id)
-        {
-            if(id == null)
-                return null;
-            var allMarks = await GetAll();
-            return allMarks.Where(m => m.MarkID == id.Value).ToList();
         }
     }
 }

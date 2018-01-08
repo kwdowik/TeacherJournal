@@ -14,8 +14,6 @@ namespace TeacherJournal.BusinessLogic
              _subjectService = subjectService;
         } 
 
-        public async Task<Subject> GetByIdAsync(int? id) => await _subjectService.GetById(id);
-
         public async Task<Subject> GetByNameAsync(string subjectName)
         {
             var subjects = await GetAll();
@@ -33,10 +31,5 @@ namespace TeacherJournal.BusinessLogic
             await _subjectService.Add(subject);
             return subject.SubjectID;
         }
-
-        public async Task Remove(int id) => await _subjectService.Remove(id);
-
-        public async Task Update(Subject subject) => await _subjectService.Update(subject);
-        
     }
 }
