@@ -31,7 +31,10 @@ namespace TeacherJournal.Core.Controllers
             var subject = await _subjectService.GetByNameAsync(subjectName);
             if(subject == null) 
                 return NotFound();
-            await _markService.Create(studentID, subject.SubjectID, newMark);
+            if(newMark != null)
+            {
+                await _markService.Create(studentID, subject.SubjectID, newMark);
+            }
             return RedirectToAction("Details", "Student", new {id = studentID});
         }
 
