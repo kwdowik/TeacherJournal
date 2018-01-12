@@ -14,10 +14,11 @@ namespace TeacherJournal.BusinessLogic
             _teacherRepository = teacherRepository;
         }
 
-        public async Task<Teacher> GetByLoginAsync(string teacherLogin)
+        public async Task<bool> IsAuthenticated(string login, string password)
         {
             var teachers = await GetAll();
-            return teachers.Where(s => s.Login == teacherLogin).FirstOrDefault();
+            return teachers.Where(t => t.Login == login && t.Password == password)
+                .FirstOrDefault() != null;
         }
 
          public async Task<IReadOnlyCollection<Teacher>> GetAll() => await _teacherRepository.GetAllAsync();

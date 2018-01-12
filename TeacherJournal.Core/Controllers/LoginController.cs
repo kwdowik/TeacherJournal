@@ -29,8 +29,7 @@ namespace TeacherJournal.Core.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(string login, string password)
         {
-            // TODO: log in
-            if(await _teacherService.GetByLoginAsync(login) != null)
+            if(await _teacherService.IsAuthenticated(login, password))
             {
                 var claims = new List<Claim>()
                 {
