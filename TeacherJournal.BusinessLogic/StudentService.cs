@@ -27,7 +27,5 @@ namespace TeacherJournal.BusinessLogic
 
         public async Task Remove(int id) => await _studentRepository.Remove(id);
 
-        public double CalculateMarksAvarage(List<int> marks) => ((double)marks.Sum() / (double)marks.Count);
-
     }
 }
