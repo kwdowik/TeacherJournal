@@ -20,7 +20,7 @@ namespace TeacherJournal.Core
 
             var teachers = new Teacher[]
             {
-                new Teacher{Login="Luke", Password="password123"},
+                new Teacher{Login="Luke", Password="password"},
                 new Teacher{Login="Andrew", Password="password123"}
             };
             context.Teachers.AddRange(teachers);
@@ -42,31 +42,31 @@ namespace TeacherJournal.Core
 
             var subjects = new Subject[]
             {
-                new Subject{SubjectID=1050,Name="Chemistry"},
-                new Subject{SubjectID=4022,Name="Microeconomics"},
-                new Subject{SubjectID=4041,Name="Macroeconomics"},
-                new Subject{SubjectID=1045,Name="Calculus"},
-                new Subject{SubjectID=3141,Name="Trigonometry"},
-                new Subject{SubjectID=2021,Name="Composition"},
-                new Subject{SubjectID=2042,Name="Literature"}
+                new Subject{ID=1050,Name="Chemistry"},
+                new Subject{ID=4022,Name="Microeconomics"},
+                new Subject{ID=4041,Name="Macroeconomics"},
+                new Subject{ID=1045,Name="Calculus"},
+                new Subject{ID=3141,Name="Trigonometry"},
+                new Subject{ID=2021,Name="Composition"},
+                new Subject{ID=2042,Name="Literature"}
             };
             context.Subjects.AddRange(subjects);
             context.SaveChanges();
 
             var marks = new Mark[]
             {
-                new Mark{StudentID=1,SubjectID=1050,Grade=3},
-                new Mark{StudentID=1,SubjectID=4022,Grade=4},
-                new Mark{StudentID=1,SubjectID=4041,Grade=3},
-                new Mark{StudentID=2,SubjectID=1045,Grade=4},
-                new Mark{StudentID=2,SubjectID=3141,Grade=4},
-                new Mark{StudentID=2,SubjectID=2021,Grade=3},
-                new Mark{StudentID=3,SubjectID=1050,Grade=2},
-                new Mark{StudentID=4,SubjectID=1050,Grade=5},
-                new Mark{StudentID=4,SubjectID=4022,Grade=5},
-                new Mark{StudentID=5,SubjectID=4041,Grade=5},
-                new Mark{StudentID=6,SubjectID=1045,Grade=6},
-                new Mark{StudentID=7,SubjectID=3141,Grade=4},
+                new Mark{ID=1,SubjectID=1050,Grade=3},
+                new Mark{ID=1,SubjectID=4022,Grade=4},
+                new Mark{ID=1,SubjectID=4041,Grade=3},
+                new Mark{ID=2,SubjectID=1045,Grade=4},
+                new Mark{ID=2,SubjectID=3141,Grade=4},
+                new Mark{ID=2,SubjectID=2021,Grade=3},
+                new Mark{ID=3,SubjectID=1050,Grade=2},
+                new Mark{ID=4,SubjectID=1050,Grade=5},
+                new Mark{ID=4,SubjectID=4022,Grade=5},
+                new Mark{ID=5,SubjectID=4041,Grade=5},
+                new Mark{ID=6,SubjectID=1045,Grade=6},
+                new Mark{ID=7,SubjectID=3141,Grade=4},
             };
             context.Marks.AddRange(marks);
             context.SaveChanges();
