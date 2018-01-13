@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TeacherJournal.BusinessLogic
 {
-    public class Student
+    public class Student : IModelObject
     {
         public Student() {}
         public int ID {get; set;}
