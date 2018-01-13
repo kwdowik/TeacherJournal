@@ -27,9 +27,9 @@ namespace TeacherJournal.BusinessLogic
             if(await GetByNameAsync(name) != null)
                 return 0;
             var random = new Random();
-            var subject = new Subject{SubjectID = random.Next(1, int.MaxValue), Name = name};
+            var subject = new Subject{ID = random.Next(1, int.MaxValue), Name = name};
             await _subjectService.Add(subject);
-            return subject.SubjectID;
+            return subject.ID;
         }
     }
 }

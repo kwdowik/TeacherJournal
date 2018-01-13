@@ -23,8 +23,8 @@ namespace TeacherJournal.BusinessLogic
             var random = new Random();
             
             var mark = grade == null 
-                ? new Mark{ MarkID = random.Next(1, int.MaxValue), StudentID = studentID.Value, SubjectID = subjectID.Value } 
-                : new Mark{ MarkID = random.Next(1, int.MaxValue), StudentID = studentID.Value, SubjectID = subjectID.Value, Grade = grade.Value };
+                ? new Mark{ ID = random.Next(1, int.MaxValue), StudentID = studentID.Value, SubjectID = subjectID.Value } 
+                : new Mark{ ID = random.Next(1, int.MaxValue), StudentID = studentID.Value, SubjectID = subjectID.Value, Grade = grade.Value };
             await _markRepository.Add(mark);
         }
         
@@ -34,7 +34,7 @@ namespace TeacherJournal.BusinessLogic
         {
             foreach(var mark in marks)
             {
-                await Remove(mark.MarkID);
+                await Remove(mark.ID);
             }
         }
     }
