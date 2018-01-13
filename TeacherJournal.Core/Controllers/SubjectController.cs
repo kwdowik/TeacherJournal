@@ -33,7 +33,7 @@ namespace TeacherJournal.Core.Controllers
                 return NotFound();
             if(newMark != null)
             {
-                await _markService.Create(studentID, subject.SubjectID, newMark);
+                await _markService.Create(studentID, subject.ID, newMark);
             }
             return RedirectToAction("Details", "Student", new {id = studentID});
         }
@@ -74,7 +74,7 @@ namespace TeacherJournal.Core.Controllers
                 subjectID = await _subjectService.Create(subjectName);
             }else 
             {
-                subjectID = subject.SubjectID;
+                subjectID = subject.ID;
             }   
             return subjectID;   
         }
