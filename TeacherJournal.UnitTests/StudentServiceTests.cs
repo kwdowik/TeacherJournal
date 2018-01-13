@@ -5,80 +5,86 @@ using System.Threading.Tasks;
 using TeacherJournal.BusinessLogic;
 using System.Collections.Generic;
 
-namespace TeacherJournal.Tests
+namespace TeacherJournal.UnitTests
 {
     public class StudentServiceTests
     {
         [Fact]
-        public async Task WhenStudnetIsAdded_IdIsAssigned()
+        public async Task Create_WhenStudnetWasCreated_NewStudnetIsInRepository()
         {
             // Arrange
-            var repoMock = new Mock<IRepository<Student>>();
-            var studentService = new StudentService(repoMock.Object);
-            var subjects = new List<Subject>();
-            subjects.Add(new Subject(123, "Math", new List<Mark>{ new Mark(123, 3), new Mark(1234, 5)}));
+            var fakeStudentRepository = new FakeRepository<Student>();
+            var studentService = new StudentService(fakeStudentRepository);
+            var student = new Student { FirstName = "Jan", LastName = "Kowalski" }; 
             
             // Act
-            await studentService.Create("Jan", "Kowalski", subjects);
+            await studentService.Create(student.FirstName, student.LastName);
+            var allStudents = await studentService.GetAll();            
 
             // Assert
-            repoMock.Verify(r => r.Add(It.Is<Student>(s => s.Id > 0)),Times.Once);
-        }
-
-        [Theory]
-        [InlineData(3, 4, 3, 3.33)]
-        [InlineData(5, 5, 5, 5)]
-        [InlineData(2, 4, 2, 2.67)]
-        [InlineData(2, 4, 5, 3.67)]        
-        public void WhenStudnetHasMarks_AvarageIsCalculated(int mark1, int mark2, int mark3, double expectedAvarage)
-        {
-            // Arrange
-            var repoMock = new Mock<IRepository<Student>>();
-            var studentService = new StudentService(repoMock.Object);
-            var marks = new List<int>{mark1, mark2, mark3};
-            
-            // Act
-            var avarage = studentService.CalculateMarksAvarage(marks);            
-
-            // Assert
-            Assert.Equal(expectedAvarage, avarage, 2);
+            Assert.Equal(1, allStudents.Count);
         }
 
         [Fact]
-        public async Task WhenTeacherAddMarkToStudent_StudentHasNewMark()
+        public async Task Create_WhenThreeStudentsWereCreated_ThreeNewStudentsAreInRepository()
         {
-             // Arrange
-            var repoMock = new Mock<IRepository<Student>>();
-            var studentService = new StudentService(repoMock.Object);
-            var subjects = new List<Subject>();
-            subjects.Add(new Subject(123, "Math", new List<Mark>{ new Mark(123, 3), new Mark(1234, 5)}));
-            var student = new Student(123123, "Jan", "Kowlaski", subjects);
-            await repoMock.Object.Add(student);
+            // Arrange
+            var fakeStudentRepository = new FakeRepository<Student>();
+            var studentService = new StudentService(fakeStudentRepository);
+            List<Student> students = new List<Student> {
+                new Student{ FirstName = "Jan", LastName = "Kowalski" },
+                new Student { FirstName = "Luke", LastName = "Smith" },
+                new Student { FirstName = "Pablo", LastName = "Perry" }
+            };
             
             // Act
-            studentService.AddMark(student, "Math", 4);
+            foreach (var student in students)
+            {
+                await studentService.Create(student.FirstName, student.LastName);
+            }
+            var allStudents = await studentService.GetAll();
 
             // Assert
-            Assert.Equal(3, student.Subjects.Find(s => s.Name == "Math").Marks.Count);
+            Assert.Equal(3, allStudents.Count);
         }
 
         [Fact]
-        public async Task WhenTeacherRemoveMarkFromStudent_StudentHasOneMarkLess()
+        public async Task Remove_WhenStudentRemoved_OneStudentLessInRepository()
         {
-             // Arrange
-            var repoMock = new Mock<IRepository<Student>>();
-            var studentService = new StudentService(repoMock.Object);
-             var subjects = new List<Subject>();
-            subjects.Add(new Subject(123, "Math", new List<Mark>{ new Mark(123, 3), new Mark(1234, 5)}));
-            var student = new Student(123123, "Jan", "Kowlaski", subjects);
-            await repoMock.Object.Add(student);
+            // Arrange
+            var firstStudent = new Student { ID = 123 ,FirstName = "Luke", LastName = "Smith" };
+            var secondStudent = new Student { ID = 321 ,FirstName = "Pablo", LastName = "Perry" };            
+            var fakeStudentRepository = new FakeRepository<Student>();
+            await fakeStudentRepository.Add(firstStudent);
+            await fakeStudentRepository.Add(secondStudent);
+            var studentService = new StudentService(fakeStudentRepository);
             
             // Act
-            studentService.RemoveMark(student, "Math", 1);
-
+            await studentService.Remove(123);
+            var allStudents = await studentService.GetAll();
+            
             // Assert
-            Assert.Equal(1, student.Subjects.Find(s => s.Name == "Math").Marks.Count);
+            Assert.Equal(1, allStudents.Count);
         }
+
+        [Fact]
+        public async Task GetByIdAsync_FindStudentFromRepository()
+        {
+            // Arrange
+            var expectedStudent = new Student { ID = 123 ,FirstName = "Luke", LastName = "Smith" };
+            var fakeStudentRepository = new FakeRepository<Student>();
+            await fakeStudentRepository.Add(expectedStudent);
+            var studentService = new StudentService(fakeStudentRepository);
+            
+            // Act
+            var student = await studentService.GetByIdAsync(123);
+            
+            // Assert
+            Assert.Same(student, expectedStudent);
+        }
+
+        
         
     }
 }
+
