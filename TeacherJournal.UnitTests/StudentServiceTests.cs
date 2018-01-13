@@ -68,7 +68,7 @@ namespace TeacherJournal.UnitTests
         }
 
         [Fact]
-        public async Task GetByIdAsync_FindStudentFromRepository()
+        public async Task GetByIdAsync_FindStudentInRepository()
         {
             // Arrange
             var expectedStudent = new Student { ID = 123 ,FirstName = "Luke", LastName = "Smith" };
