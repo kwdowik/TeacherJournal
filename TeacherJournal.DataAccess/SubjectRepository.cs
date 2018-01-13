@@ -32,7 +32,7 @@ namespace TeacherJournal.DataAccess
             return await _journalDbContext.Subjects
                 .Include(s => s.Marks)
                 .AsNoTracking()
-                .SingleOrDefaultAsync(m => m.SubjectID == id);
+                .SingleOrDefaultAsync(m => m.ID == id);
         }
 
         public async Task Remove(int id)

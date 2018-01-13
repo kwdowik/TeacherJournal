@@ -29,7 +29,7 @@ namespace TeacherJournal.DataAccess
                 return null;
 
             return await _journalDbContext.Marks
-                .SingleOrDefaultAsync(m => m.MarkID == id);
+                .SingleOrDefaultAsync(m => m.ID == id);
         }
 
         public async Task Remove(int id)

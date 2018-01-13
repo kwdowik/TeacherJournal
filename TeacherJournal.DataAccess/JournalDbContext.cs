@@ -26,7 +26,7 @@ namespace TeacherJournal.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var teacherMapping = modelBuilder.Entity<Teacher>();
-            teacherMapping.HasKey(p => p.TeacherId);
+            teacherMapping.HasKey(p => p.ID);
             teacherMapping.Property(p => p.Login).IsRequired();
             teacherMapping.Property(p => p.Password).IsRequired();
 
@@ -36,11 +36,11 @@ namespace TeacherJournal.DataAccess
             studentMapping.Property(p => p.LastName).IsRequired();
 
             var subjectMapping = modelBuilder.Entity<Subject>();
-            subjectMapping.HasKey(s => s.SubjectID);
+            subjectMapping.HasKey(s => s.ID);
             subjectMapping.Property(s => s.Name).IsRequired();
             
             var markMapping = modelBuilder.Entity<Mark>();
-            markMapping.HasKey(s => s.MarkID);
+            markMapping.HasKey(s => s.ID);
            
         }
 
