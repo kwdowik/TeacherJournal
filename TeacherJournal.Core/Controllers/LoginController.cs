@@ -52,6 +52,13 @@ namespace TeacherJournal.Core.Controllers
             return View();
         }
 
+        // GET: Logout
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return Redirect("/Login");
+        }
+
         // GET: About
         public IActionResult About()
         {
